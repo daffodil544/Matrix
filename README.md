@@ -2,6 +2,8 @@
 
 🚀 **[Open the Project](https://gl-guardian.lovable.app)**
 
+!!!!! APPLICATION WORKS PER DATA FILE ONLY FOR NOW, MULTIPLE FILE INTEGRATION IS POSSIBLE IN THE FUTURE. PLEASE USE ONE FILE PER FORECASTING, FEEL FREE TO TRY MULTIPLE TYPES OF FILES !!!!!
+
 > AI-assisted 13-week cash flow forecasting for construction companies.
 > Deterministic financials. Auditable numbers. Zero black-box calculations.
 
