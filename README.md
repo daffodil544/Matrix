@@ -1,5 +1,7 @@
 # Cashflow — Run Instructions & Architecture Overview
 
+🚀 **[Open the Project](https://gl-guardian.lovable.app)**
+
 > AI-assisted 13-week cash flow forecasting for construction companies.
 > Deterministic financials. Auditable numbers. Zero black-box calculations.
 
@@ -185,7 +187,7 @@ Each run executes these steps in sequence:
 ## 5. Architecture Overview
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
+┌────────────────────────────────────────────────────────────────[...]
 │                         FRONTEND (Lovable)                       │
 │                                                                  │
 │  ┌─────────────┐  ┌──────────────────┐  ┌────────────────────┐  │
@@ -193,10 +195,10 @@ Each run executes these steps in sequence:
 │  │  & Review   │  │  13-week table   │  │  Natural language  │  │
 │  │  Table      │  │  Audit drill-down│  │  Q&A on forecasts  │  │
 │  └──────┬──────┘  └────────┬─────────┘  └─────────┬──────────┘  │
-└─────────┼─────────────────┼───────────────────────┼────────────┘
+└─────────┼─────────────────┼───────────────────────┼────────────[...]
           │                 │                        │
           ▼                 ▼                        ▼
-┌─────────────────────────────────────────────────────────────────┐
+┌────────────────────────────────────────────────────────────────[...]
 │                     SUPABASE (Backend)                           │
 │                                                                  │
 │  ┌──────────────┐  ┌──────────────┐  ┌───────────────────────┐  │
@@ -210,7 +212,7 @@ Each run executes these steps in sequence:
 │  │ invoices │  │ materials │  │ payments │  │               │  │
 │  │ labour   │  │subcontract│  │          │  │               │  │
 │  └──────────┘  └───────────┘  └──────────┘  └───────────────┘  │
-└─────────────────────────────────────────────────────────────────┘
+└────────────────────────────────────────────────────────────────[...]
           │                                        │
           ▼                                        ▼
 ┌────────────────────────┐          ┌──────────────────────────┐
@@ -229,7 +231,7 @@ Each run executes these steps in sequence:
 Handles file upload, classification review, forecast display, drill-down audit views, and the natural-language copilot interface. Reads from and writes to Supabase via the JS client.
 
 **Supabase (Postgres + pgvector)**
-Single source of truth for all financial data, GL mappings, embeddings, forecast results, and audit JSON. Row-level security ensures per-company data isolation. The `forecast_weeks.audit_json` column stores the full calculation chain for every weekly value.
+Single source of truth for all financial data, GL mappings, embeddings, forecast results, and audit JSON. Row-level security ensures per-company data isolation. The `forecast_weeks.audit_json` co[...]
 
 **OpenAI API**
 Used in four distinct, isolated roles — none of which can directly modify a financial number:
@@ -239,7 +241,7 @@ Used in four distinct, isolated roles — none of which can directly modify a fi
 - Copilot natural-language explanations (reads from forecast data, does not recalculate)
 
 **Weather APIs**
-Two independent providers fetched per forecast run. Consensus = average of both. If provider disagreement exceeds 30%, the week is flagged `LOW_WEATHER_CONFIDENCE`. Results are cached in `weather_cache` for the current forecast window.
+Two independent providers fetched per forecast run. Consensus = average of both. If provider disagreement exceeds 30%, the week is flagged `LOW_WEATHER_CONFIDENCE`. Results are cached in `weather[...]
 
 ---
 
@@ -262,13 +264,13 @@ The forecast pipeline is structured as six sequential stages. Each stage writes 
 
 **Determinism first.** Every financial number is the output of an explicit, traceable formula. AI outputs are inputs to decision logic — they never touch a cash value directly.
 
-**Confidence gating.** AI estimates replace defaults only when the model's own confidence exceeds the threshold (80% for payment lag, 75% for GL classification). Below threshold, the system falls back to historical averages.
+**Confidence gating.** AI estimates replace defaults only when the model's own confidence exceeds the threshold (80% for payment lag, 75% for GL classification). Below threshold, the system falls[...]
 
-**Full audit trail.** `forecast_weeks.audit_json` stores the complete derivation chain: source invoice → milestone → weather adjustment → payment lag → cost allocation → final value. Users can click any cell and read the chain.
+**Full audit trail.** `forecast_weeks.audit_json` stores the complete derivation chain: source invoice → milestone → weather adjustment → payment lag → cost allocation → final value. Us[...]
 
 **Learning loop.** Every human correction to a GL mapping generates an embedding and is stored as a high-priority override. The system gets more accurate with use, without retraining.
 
-**Weather consensus.** Using two independent weather providers and averaging their output reduces single-provider error. Disagreement flags are surfaced in the UI so users can decide how much to trust delay predictions for that week.
+**Weather consensus.** Using two independent weather providers and averaging their output reduces single-provider error. Disagreement flags are surfaced in the UI so users can decide how much to [...]
 
 ---
 
