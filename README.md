@@ -325,6 +325,4 @@ python pipeline/ingest_gl.py --file data/exports/your_export.xlsx --company-id y
 
 # 6. Run the forecast
 python pipeline/run_forecast.py --company-id your-co --start-date 2025-06-09 --weeks 13
-``` 
- 
- 
+```
